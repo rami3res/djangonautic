@@ -8,7 +8,6 @@ def signup_view(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            #  log the user in
             login(request, user)
             return redirect('articles:list')
     else:
@@ -20,12 +19,10 @@ def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
-            # log the user in
             user = form.get_user()
             login(request, user)
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
-                #return redirect(request.POST.get('next'))
             else:
                 return redirect('articles:list')
     else:
